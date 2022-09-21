@@ -1,14 +1,10 @@
-# Project
+# AutoRL Research
 
-> This repo has been populated by an initial template to help get you started. Please
-> make sure to update the content to build a great experience for community-building.
+This repository contains code for a series of research projects on Automated Reinforcement Learning (AutoRL).
 
-As the maintainer of this project, please make a few updates:
+## News
 
-- Improving this README.MD file to provide a great experience
-- Updating SUPPORT.MD with content about this project's support experience
-- Understanding the security reporting process in SECURITY.MD
-- Remove this section from the README
+* 2022.9.21 [Towards Applicable Reinforcement Learning: Improving the Generalization and Sample Efficiency with Policy Ensemble](https://seqml.github.io/eppo/) is now available in [eppo](eppo).
 
 ## Contributing
 
