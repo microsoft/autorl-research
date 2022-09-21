@@ -1,0 +1,51 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+_custom_imports_:
+  - code.policy
+  - code.network
+env:
+  concurrency: 16
+  env_name:  PongNoFrameskip-v4 #BreakoutNoFrameskip-v4
+  max_episode_steps: 108000
+  episode_life: true
+  clip_rewards: true
+  frame_stack: true
+  scale: false
+network1:
+  type: AtariCNN
+  input_dims: 2 # mountain car's obervation space, will be changed in code 
+  num_layers: 1
+  output_dim: 64
+network2:
+  type: AtariCNN
+  input_dims: 2 # mountain car's obervation space, will be changed in code 
+  num_layers: 1
+  output_dim: 64
+policy:
+  type: MARLPPOPolicy
+  lr: 0.0001
+  num_policy: 4
+  weight_decay: 1.0e-05
+  discount_factor: 0.99
+  gae_lambda: 0.95
+  max_grad_norm: 0.5
+  value_clip: true
+  eps_clip: 0.1
+  diverse_coef: 0.01
+  sub_policy_coef: 0.5
+  center_policy_coef: 1.0
+trainer:
+  max_epoch: 1000
+  repeat_per_collect: 5
+  earlystop_patience: 40000
+  episode_per_collect: 10000 
+  batch_size: 256
+  val_every_n_epoch: 10
+  fast_dev_run: false
+  buffer_size: 200000
+  save_epoch: false
+runtime:
+  use_cuda: true
+  seed: 42
+
+
