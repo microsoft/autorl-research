@@ -14,7 +14,7 @@ conda env create -f conda_env.yml
 
 ## Instructions
 We present some running examples of training RL with auxiliary losses with our code base.
-### `Forward dynamics prediction`
+### Forward dynamics prediction
 $\mathcal{L}_{\text{forward \ dynamics}} = \| h(g_\theta(s_t, a_t)) - g_{\hat{\theta}}(s_{t+1}) \|_2$
 
 To train a SAC agent with `Forward dynamics prediction` on image-based Cheetah-Run with default hyper-parameters (please refer to appendix for detailed hyper-parameters for each experiment setting): 
@@ -40,7 +40,7 @@ python train.py \
     --similarity_metric mse
 ```
 
-### `A2-winner`
+### A2-winner
 $\mathcal{L}_{\text{A2-winner}} = \| h(g_\theta(s_{t+1}, a_{t+1}, a_{t+2}, a_{t+3})) - g_{\hat{\theta}}(r_t, r_{t+1}, s_{t+2}, s_{t+3}) \|_2$
 
 To train a SAC agent with `A2-winner` on image-based Cheetah-Run with default hyper-parameters (please refer to appendix for detailed hyper-parameters for each experiment setting): 
@@ -67,7 +67,7 @@ python train.py \
     --similarity_metric mse
 ```
 
-### `A2-winner-v`
+### A2-winner-v
 
 $\mathcal{L}_{\text{A2-winner-v}} = \| h(g_\theta(s_{t}, a_{t}, a_{t+1}, s_{t+2} a_{t+2}, a_{t+3}, r_{t+3}, a_{t+4}, r_{t+4}, a_{t+5}, a_{t+7}, s_{t+8}, a_{t+8}, r_{t+8})) - g_{\hat{\theta}}(s_{t+1}, s_{t+3}, a_{t+4}, s_{t+6}, s_{t+9}) \|_2$
 
