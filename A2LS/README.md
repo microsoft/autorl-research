@@ -14,31 +14,6 @@ conda env create -f conda_env.yml
 
 ## Instructions
 We present some running examples of training RL with auxiliary losses with our code base.
-### Forward dynamics prediction
-$\mathcal{L}_{\text{forward \ dynamics}} = \| h(g_\theta(s_t, a_t)) - g_{\hat{\theta}}(s_{t+1}) \|_2$
-
-To train a SAC agent with `Forward dynamics prediction` on image-based Cheetah-Run with default hyper-parameters (please refer to appendix for detailed hyper-parameters for each experiment setting): 
-```
-python train.py \
-    --domain_name cheetah_run \
-    --encoder_type pixel \
-    --agent auxi_sac \ 
-    --auxi_pred_horizon 1 \
-    --auxi_pred_input_s 1 --auxi_pred_input_a 1 --auxi_pred_input_r 0 --auxi_pred_input_s_ 0\
-    --auxi_pred_output_s 0 --auxi_pred_output_a 0 --auxi_pred_output_r 0 --auxi_pred_output_s_ 1\
-    --similarity_metric mse
-```
-To train a SAC agent with `Forward dynamics prediction` on vector-based Cheetah-Run with default hyper-parameters (please refer to appendix for detailed hyper-parameters for each experiment setting): 
-```
-python train.py \
-    --domain_name cheetah_run \
-    --encoder_type ofe --encoder_hidden_size 40 --num_layers 1  \
-    --agent auxi_sac \ 
-    --auxi_pred_horizon 1 \
-    --auxi_pred_input_s 1 --auxi_pred_input_a 1 --auxi_pred_input_r 0 --auxi_pred_input_s_ 0\
-    --auxi_pred_output_s 0 --auxi_pred_output_a 0 --auxi_pred_output_r 0 --auxi_pred_output_s_ 1\
-    --similarity_metric mse
-```
 
 ### A2-winner
 $\mathcal{L}_{\text{A2-winner}} = \| h(g_\theta(s_{t+1}, a_{t+1}, a_{t+2}, a_{t+3})) - g_{\hat{\theta}}(r_t, r_{t+1}, s_{t+2}, s_{t+3}) \|_2$
@@ -152,3 +127,15 @@ python train.py \
 For GPU accelerated rendering, make sure EGL is installed on your machine and set `export MUJOCO_GL=egl`. 
 
 For environment troubleshooting issues, see the DeepMind control documentation.
+
+
+## Citation
+You are more than welcome to cite our paper:
+```
+@article{he2022reinforcement,
+  title={Reinforcement Learning with Automated Auxiliary Loss Search},
+  author={He, Tairan and Zhang, Yuge and Ren, Kan and Liu, Minghuan and Wang, Che and Zhang, Weinan and Yang, Yuqing and Li, Dongsheng},
+  journal={Advances in Neural Information Processing Systems},
+  year={2022}
+}
+```
