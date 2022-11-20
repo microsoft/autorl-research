@@ -5,6 +5,7 @@ This repository contains code for a series of research projects on Automated Rei
 ## News
 
 * 2022.9.21 [Towards Applicable Reinforcement Learning: Improving the Generalization and Sample Efficiency with Policy Ensemble](https://seqml.github.io/eppo/) is now available in [eppo](eppo).
+* 2022.10.12 [Reinforcement Learning with Automated Auxiliary Loss Search](https://seqml.github.io/A2LS/) is now available in [a2ls](a2ls).
 
 ## Contributing
 
