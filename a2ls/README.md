@@ -1,6 +1,6 @@
 # A2LS: Reinforcement Learning with Automated Auxiliary Loss Search
 
-Code for NeurIPS 2022 paper [Reinforcement Learning with Automated Auxiliary Loss Search](https://seqml.github.io/A2LS/).
+Code for NeurIPS 2022 paper [Reinforcement Learning with Automated Auxiliary Loss Search](https://seqml.github.io/a2ls/).
 
 This repository is the implementation of A2LS based on the official implementation of [CURL](https://mishalaskin.github.io/curl/) for the DeepMind control experiments.
 
@@ -16,7 +16,8 @@ conda env create -f conda_env.yml
 We present some running examples of training RL with auxiliary losses with our code base.
 
 ### A2-winner
-$\mathcal{L}_{\text{A2-winner}} = \| h(g_\theta(s_{t+1}, a_{t+1}, a_{t+2}, a_{t+3})) - g_{\hat{\theta}}(r_t, r_{t+1}, s_{t+2}, s_{t+3}) \|_2$
+![\mathcal{L}_{\text{A2-winner}} = \| h(g_{\theta}(s_{t+1}, a_{t+1}, a_{t+2}, a_{t+3})) - g_{\hat{\theta}}(r_t, r_{t+1}, s_{t+2}, s_{t+3}) \|_2](https://latex.codecogs.com/svg.image?%5Cmathcal%7BL%7D_%7B%5Ctext%7BA2-winner%7D%7D%20=%20%5C%7C%20h(g_%7B%5Ctheta%7D(s_%7Bt&plus;1%7D,%20a_%7Bt&plus;1%7D,%20a_%7Bt&plus;2%7D,%20a_%7Bt&plus;3%7D))%20-%20g_%7B%5Chat%7B%5Ctheta%7D%7D(r_t,%20r_%7Bt&plus;1%7D,%20s_%7Bt&plus;2%7D,%20s_%7Bt&plus;3%7D)%20%5C%7C_2)
+
 
 To train a SAC agent with `A2-winner` on image-based Cheetah-Run with default hyper-parameters (please refer to appendix for detailed hyper-parameters for each experiment setting): 
 ```
@@ -44,7 +45,9 @@ python train.py \
 
 ### A2-winner-v
 
-$\mathcal{L}_{\text{A2-winner-v}} = \| h(g_\theta(s_{t}, a_{t}, a_{t+1}, s_{t+2} a_{t+2}, a_{t+3}, r_{t+3}, a_{t+4}, r_{t+4}, a_{t+5}, a_{t+7}, s_{t+8}, a_{t+8}, r_{t+8})) - g_{\hat{\theta}}(s_{t+1}, s_{t+3}, a_{t+4}, s_{t+6}, s_{t+9}) \|_2$
+
+![\mathcal{L}_{\text{A2-winner-v}} = \| h(g_{\theta}(s_{t}, a_{t}, a_{t+1}, s_{t+2} a_{t+2}, a_{t+3}, r_{t+3}, a_{t+4}, r_{t+4}, a_{t+5}, a_{t+7}, s_{t+8}, a_{t+8}, r_{t+8})) - g_{\hat{\theta}}(s_{t+1}, s_{t+3}, a_{t+4}, s_{t+6}, s_{t+9}) \|_2](https://latex.codecogs.com/svg.image?%5Cmathcal%7BL%7D_%7B%5Ctext%7BA2-winner-v%7D%7D%20=%20%5C%7C%20h(g_%7B%5Ctheta%7D(s_%7Bt%7D,%20a_%7Bt%7D,%20a_%7Bt&plus;1%7D,%20s_%7Bt&plus;2%7D%20a_%7Bt&plus;2%7D,%20a_%7Bt&plus;3%7D,%20r_%7Bt&plus;3%7D,%20a_%7Bt&plus;4%7D,%20r_%7Bt&plus;4%7D,%20a_%7Bt&plus;5%7D,%20a_%7Bt&plus;7%7D,%20s_%7Bt&plus;8%7D,%20a_%7Bt&plus;8%7D,%20r_%7Bt&plus;8%7D))%20-%20g_%7B%5Chat%7B%5Ctheta%7D%7D(s_%7Bt&plus;1%7D,%20s_%7Bt&plus;3%7D,%20a_%7Bt&plus;4%7D,%20s_%7Bt&plus;6%7D,%20s_%7Bt&plus;9%7D)%20%5C%7C_2)
+
 
 To train a SAC agent with `A2-winner` on image-based Cheetah-Run with default hyper-parameters (please refer to appendix for detailed hyper-parameters for each experiment setting): 
 ```
