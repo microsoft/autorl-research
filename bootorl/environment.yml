@@ -1,0 +1,23 @@
+# Copyright (c) Microsoft Corporation. All rights reserved.
+# Licensed under the MIT License.
+
+name: boot
+channels:
+- defaults
+- conda-forge
+- pytorch
+dependencies:
+- python=3.8.5
+- pip>=20.2
+- conda>=4.9.2
+- patchelf=0.12
+- pytorch=1.10.0
+- torchvision=0.11.0
+- torchaudio=0.10.0
+- cudatoolkit=11.3
+- pip:
+    - scikit-learn
+    - pandas
+    - git+https://github.com/rail-berkeley/d4rl.git@d842aa194b416e564e54b0730d9f934e3e32f854
+    - git+https://github.com/openai/gym.git@66c431d4b3072a1db44d564dab812b9d23c06e14
+    - tqdm>=4.51.0
