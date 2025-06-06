@@ -4,6 +4,7 @@ This repository contains code for a series of research projects on Automated Rei
 
 ## News
 
+* 2025.6.6 [Agent Lightning](agentlightning) is now available as a research preview.
 * 2022.9.21 [Towards Applicable Reinforcement Learning: Improving the Generalization and Sample Efficiency with Policy Ensemble](https://seqml.github.io/eppo/) is now available in [eppo](eppo).
 * 2022.10.12 [Reinforcement Learning with Automated Auxiliary Loss Search](https://seqml.github.io/a2ls/) is now available in [a2ls](a2ls).
 * 2023.3.10 [Bootstrapped Transformer for Offline Reinforcement Learning](https://seqml.github.io/bootorl/) is now available in [bootorl](bootorl).
