@@ -1,0 +1,13 @@
+hydra:
+  searchpath:
+    - file://verl/trainer/config
+
+defaults:
+  - ppo_trainer
+  - _self_
+
+agentlightning:
+  port: 9999
+
+rollout:
+  name: vllm_agentlightning
