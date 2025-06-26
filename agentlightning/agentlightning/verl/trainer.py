@@ -1,5 +1,6 @@
 import random
 from contextlib import contextmanager
+from copy import deepcopy
 from typing import Dict
 
 import numpy as np
@@ -24,6 +25,7 @@ from verl.trainer.ppo.metric_utils import (
     compute_throughout_metrics,
     compute_timing_metrics,
 )
+from verl.utils.metric import reduce_metrics
 from verl.utils.tracking import Tracking
 
 from .daemon import AgentModeDaemon
@@ -211,14 +213,7 @@ class AgentLightningTrainer(RayPPOTrainer):
 
                     with _timer("adv", timing_raw):
                         # if agent_mode is enabled, there is already token_level_scores
-                        # we combine with rule-based rm
-                        reward_extra_infos_dict: dict[str, list]
-                        assert not self.config.reward_model.launch_reward_fn_async
-                        batch.batch["token_level_scores"] = reward_tensor
-
-                        print(f"{list(reward_extra_infos_dict.keys())=}")
-                        if reward_extra_infos_dict:
-                            batch.non_tensor_batch.update({k: np.array(v) for k, v in reward_extra_infos_dict.items()})
+                        # token_level_scores is not needed to compute here
 
                         # compute rewards. apply_kl_penalty if available
                         if self.config.algorithm.use_kl_in_reward:
