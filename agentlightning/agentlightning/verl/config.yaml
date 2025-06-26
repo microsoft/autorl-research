@@ -8,3 +8,10 @@ defaults:
 
 agentlightning:
   port: 9999
+
+data:
+  filter_overlong_prompts: false
+
+actor_rollout_ref:
+  rollout:
+    mode: async

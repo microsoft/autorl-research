@@ -14,7 +14,11 @@ def main(config):
 
 def run_ppo(config) -> None:
     if not ray.is_initialized():
-        raise RuntimeError("Ray is not initialized. Please initialize ray first.")
+        # this is for local ray cluster
+        ray.init(
+            runtime_env={"env_vars": {"TOKENIZERS_PARALLELISM": "true", "NCCL_DEBUG": "WARN", "VLLM_LOGGING_LEVEL": "WARN"}},
+            num_cpus=config.ray_init.num_cpus,
+        )
 
     runner = TaskRunner.remote()
     ray.get(runner.run.remote(config))
