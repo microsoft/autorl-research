@@ -11,6 +11,7 @@ import requests
 import torch
 from agentlightning import LLM, AgentLightningServer, NamedResources, Rollout, configure_logger
 from flask import Flask, Response, abort, request
+from openai.types.chat.chat_completion import ChatCompletion
 from tensordict import TensorDict
 
 from verl import DataProto
@@ -91,7 +92,7 @@ class AgentModeDaemon:
     the original interface for compatibility with the RayPPOTrainer.
     """
 
-    def __init__(self, port, train_rollout_n, train_information, mini_batch_size, pad_token_id):
+    def __init__(self, port, train_rollout_n, train_information, tokenizer, mini_batch_size, pad_token_id):
         # Server and Task Configuration
         self.server_port = port
         self.task_timeout_seconds = 180
@@ -103,6 +104,7 @@ class AgentModeDaemon:
         self.train_information = train_information
         self.mini_batch_size = mini_batch_size
         self.pad_token_id = pad_token_id
+        self.tokenizer = tokenizer
 
         # Internal State
         self.backend_llm_server_addresses: List[str] = []
@@ -158,6 +160,23 @@ class AgentModeDaemon:
                 # Filter out hop-by-hop headers before returning the response
                 excluded_headers = ["content-encoding", "content-length", "transfer-encoding", "connection", "keep-alive", "proxy-authenticate", "proxy-authorization", "te", "trailers", "upgrade"]
                 response_headers = [(name, value) for name, value in resp.raw.headers.items() if name.lower() not in excluded_headers]
+                if resp.status_code == 200:
+                    # NOTE: from Zhiyuan's code.
+                    # https://github.com/hzy46/verl_agent_mode/blob/2db65ea9858f645a914120357412a7540f8bd82d/verl/trainer/ppo/ray_trainer.py#L692-L711                    
+                    request_json = json.loads(request.get_data().decode("utf-8"))
+                    response_json = json.loads(resp.content.decode("utf-8"))
+                    response_message = ChatCompletion(**response_json).choices[0].message.model_dump(exclude_unset=True, exclude_none=True)
+                    tool_schemas = request_json.get("tools", None)
+                    prompt_ids = self.tokenizer.apply_chat_template(request_json["messages"], tools=tool_schemas, add_generation_prompt=True, tokenize=True)
+                    full_ids = self.tokenizer.apply_chat_template(request_json["messages"] + [response_message], tools=tool_schemas, add_generation_prompt=False, tokenize=True)
+                    # TBD: response_ids sometimes ends with "<eos_id>\n", shall we keep the extra "\n"?
+                    # sometimes it has some differences with the hacky method in the end, but this should align with ToolCompletionCallback
+                    response_ids = full_ids[len(prompt_ids):]
+
+                    response_json['prompt_token_ids'] = prompt_ids
+                    response_json['response_token_ids'] = [response_ids]
+                    replaced_return_content = json.dumps(response_json).encode("utf-8")
+                    return Response(replaced_return_content, status=resp.status_code, headers=response_headers)
                 return Response(resp.content, resp.status_code, response_headers)
             except requests.exceptions.RequestException as e:
                 abort(500, description=f"Error proxying request: {e}")
