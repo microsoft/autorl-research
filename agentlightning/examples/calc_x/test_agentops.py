@@ -1,5 +1,5 @@
 import agentops
-# from agentlightning.reward import reward
+from agentlightning.reward import reward
 from agentops.sdk.decorators import operation
 
 # @reward
