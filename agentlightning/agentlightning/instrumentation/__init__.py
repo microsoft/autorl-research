@@ -27,12 +27,12 @@ except ImportError:
     pass
 
 
-try:
-    from . import agentops_langchain
+# try:
+#     from . import agentops_langchain
 
-    AGENTOPS_LANGCHAIN_INSTALLED = True
-except ImportError:
-    pass
+#     AGENTOPS_LANGCHAIN_INSTALLED = True
+# except ImportError:
+#     pass
 
 
 def instrument_all():
@@ -57,9 +57,9 @@ def instrument_all():
     else:
         warnings.warn("vllm is not installed. It's therefore not instrumented.")
 
-    if AGENTOPS_LANGCHAIN_INSTALLED:
-        from .agentops_langchain import instrument_agentops_langchain
+    # if AGENTOPS_LANGCHAIN_INSTALLED:
+    #     from .agentops_langchain import instrument_agentops_langchain
 
-        instrument_agentops_langchain()
-    else:
-        warnings.warn("Agentops-langchain integration is not installed. It's therefore not instrumented.")
+    #     instrument_agentops_langchain()
+    # else:
+    #     warnings.warn("Agentops-langchain integration is not installed. It's therefore not instrumented.")
