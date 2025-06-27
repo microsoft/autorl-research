@@ -19,6 +19,8 @@ try:
 except ImportError:
     pass
 
+# MAGIC! DO NOT TOUCH THIS!
+# vllm import will cause reward tracing function to fail and produce nothing.
 # try:
 #     from . import vllm
 
