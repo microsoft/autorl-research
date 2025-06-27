@@ -494,6 +494,7 @@ class LightningSpanProcessor(SpanProcessor):
         if not span.context or not span.context.trace_flags.sampled:
             return
 
+        print(f"Span: {span.name}, {span.kind}, {dict(span.attributes).keys()}")
         self._spans.append(span)
 
     def shutdown(self) -> None:
