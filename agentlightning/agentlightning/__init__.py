@@ -7,5 +7,5 @@ from .logging import configure_logger
 from .reward import reward
 from .server import AgentLightningServer
 from .trace import lightning_span_processor
-from .trainer import Trainer
+# from .trainer import Trainer
 from .types import *
