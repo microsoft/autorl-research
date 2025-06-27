@@ -5,12 +5,12 @@ AGENTOPS_LANGCHAIN_INSTALLED = False
 LITELLM_INSTALLED = False
 VLLM_INSTALLED = False
 
-try:
-    from . import agentops
+# try:
+#     from . import agentops
 
-    AGENTOPS_INSTALLED = True
-except ImportError:
-    pass
+#     AGENTOPS_INSTALLED = True
+# except ImportError:
+#     pass
 
 # try:
 #     from . import litellm
@@ -36,12 +36,12 @@ except ImportError:
 
 
 def instrument_all():
-    if AGENTOPS_INSTALLED:
-        from .agentops import instrument_agentops
+    # if AGENTOPS_INSTALLED:
+    #     from .agentops import instrument_agentops
 
-        instrument_agentops()
-    else:
-        warnings.warn("agentops is not installed. It's therefore not instrumented.")
+    #     instrument_agentops()
+    # else:
+    #     warnings.warn("agentops is not installed. It's therefore not instrumented.")
 
     # if LITELLM_INSTALLED:
     #     from .litellm import instrument_litellm
