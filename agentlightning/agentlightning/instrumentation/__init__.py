@@ -19,12 +19,12 @@ except ImportError:
 # except ImportError:
 #     pass
 
-try:
-    from . import vllm
+# try:
+#     from . import vllm
 
-    VLLM_INSTALLED = True
-except ImportError:
-    pass
+#     VLLM_INSTALLED = True
+# except ImportError:
+#     pass
 
 
 # try:
@@ -50,12 +50,12 @@ def instrument_all():
     # else:
     #     warnings.warn("litellm is not installed. It's therefore not instrumented.")
 
-    if VLLM_INSTALLED:
-        from .vllm import instrument_vllm
+    # if VLLM_INSTALLED:
+    #     from .vllm import instrument_vllm
 
-        instrument_vllm()
-    else:
-        warnings.warn("vllm is not installed. It's therefore not instrumented.")
+    #     instrument_vllm()
+    # else:
+    #     warnings.warn("vllm is not installed. It's therefore not instrumented.")
 
     # if AGENTOPS_LANGCHAIN_INSTALLED:
     #     from .agentops_langchain import instrument_agentops_langchain
