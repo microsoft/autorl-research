@@ -175,8 +175,10 @@ class AgentModeDaemon:
                     # sometimes it has some differences with the hacky method in the end, but this should align with ToolCompletionCallback
                     response_ids = full_ids[len(prompt_ids):]
 
-                    response_json['prompt_token_ids'] = prompt_ids
-                    response_json['response_token_ids'] = [response_ids]
+                    assert prompt_ids == response_json['prompt_token_ids'], f"Prompt IDs mismatch: {prompt_ids} != {response_json['prompt_token_ids']}"
+                    assert response_ids == response_json['response_token_ids'][0], f"Response IDs mismatch: {response_ids} != {response_json['response_token_ids'][0]}"
+                    # response_json['prompt_token_ids'] = prompt_ids
+                    # response_json['response_token_ids'] = [response_ids]
                     replaced_return_content = json.dumps(response_json).encode("utf-8")
                     return Response(replaced_return_content, status=resp.status_code, headers=response_headers)
                 return Response(resp.content, resp.status_code, response_headers)
