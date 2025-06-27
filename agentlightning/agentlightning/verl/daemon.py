@@ -262,6 +262,7 @@ class AgentModeDaemon:
         """Async helper to wait for all tasks to complete."""
         while len(self._completed_rollouts) < self._total_tasks_queued:
             completed_batch = await self.server.retrieve_completed_rollouts()
+            print(completed_batch)
             for rollout in completed_batch:
                 self._completed_rollouts[rollout.rollout_id] = rollout
             if verbose:
