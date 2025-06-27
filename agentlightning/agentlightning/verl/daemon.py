@@ -297,12 +297,13 @@ class AgentModeDaemon:
             if not rollout.triplets:
                 continue
             response_length_list = [len(triplet.response.get("token_ids", [])) for triplet in rollout.triplets]
+            final_reward = self._fillna_reward(rollout)
             sample_stat_list.append(
                 {
                     "sum_response_length": np.sum(response_length_list),
                     "mean_response_length": np.mean(response_length_list) if response_length_list else 0,
                     "turn_count": len(rollout.triplets),
-                    "reward": rollout.final_reward,
+                    "reward": final_reward,
                 }
             )
 
@@ -337,15 +338,7 @@ class AgentModeDaemon:
             # Example triplet.response: {"token_ids": [...]}
             trace_list = [{"prompt_ids": t.prompt.get("token_ids", []), "response_ids": t.response.get("token_ids", [])} for t in rollout.triplets]
 
-            if rollout.final_reward is None:
-                if self.reward_fillna_value is not None:
-                    print(f"Warning: Reward is None for rollout {rollout_id}, auto setting to {self.reward_fillna_value}.")
-                    final_reward = self.reward_fillna_value
-                else:
-                    raise ValueError(f"Reward is None for rollout {rollout_id}, please check the reward function.")
-            else:
-                final_reward = rollout.final_reward
-
+            final_reward = self._fillna_reward(rollout)
             info = {
                 "reward": final_reward,
                 "trace_list": trace_list,
@@ -456,3 +449,14 @@ class AgentModeDaemon:
         # For a true reset, the server's internal queues would also need clearing.
         # This implementation assumes that `set_up_data_and_server` is called
         # for each new run, effectively starting a fresh batch.
+
+    def _fillna_reward(self, rollout):
+        if rollout.final_reward is None:
+            if self.reward_fillna_value is not None:
+                print(f"Warning: Reward is None for rollout {rollout.rollout_id}, auto setting to {self.reward_fillna_value}.")
+                final_reward = self.reward_fillna_value
+            else:
+                raise ValueError(f"Reward is None for rollout {rollout.rollout_id}, please check the reward function.")
+        else:
+            final_reward = rollout.final_reward
+        return final_reward
