@@ -173,6 +173,7 @@ class AgentRunner:
                     f"{self._log_prefix(rollout_id)} Completed in "
                     f"{end_time - start_time:.2f}s. Reward: {rollout_obj.final_reward}"
                 )
+                context.last_trace()._tree_visualize("graph")
 
         except Exception:
             logger.exception(f"{self._log_prefix(rollout_id)} Exception during rollout.")
