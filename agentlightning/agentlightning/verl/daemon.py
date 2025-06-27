@@ -93,7 +93,7 @@ class AgentModeDaemon:
     the original interface for compatibility with the RayPPOTrainer.
     """
 
-    def __init__(self, port, train_rollout_n, train_information, tokenizer, mini_batch_size, pad_token_id):
+    def __init__(self, port, train_rollout_n, train_information, tokenizer, mini_batch_size, pad_token_id, reward_fillna_value = 0.0):
         # Server and Task Configuration
         self.server_port = port
         self.task_timeout_seconds = 180
@@ -106,6 +106,7 @@ class AgentModeDaemon:
         self.mini_batch_size = mini_batch_size
         self.pad_token_id = pad_token_id
         self.tokenizer = tokenizer
+        self.reward_fillna_value = reward_fillna_value
 
         # Internal State
         self.backend_llm_server_addresses: List[str] = []
@@ -335,8 +336,17 @@ class AgentModeDaemon:
             # Example triplet.response: {"token_ids": [...]}
             trace_list = [{"prompt_ids": t.prompt.get("token_ids", []), "response_ids": t.response.get("token_ids", [])} for t in rollout.triplets]
 
+            if rollout.final_reward is None:
+                if self.reward_fillna_value is not None:
+                    print(f"Warning: Reward is None for rollout {rollout_id}, auto setting to {self.reward_fillna_value}.")
+                    final_reward = self.reward_fillna_value
+                else:
+                    raise ValueError(f"Reward is None for rollout {rollout_id}, please check the reward function.")
+            else:
+                final_reward = rollout.final_reward
+
             info = {
-                "reward": rollout.final_reward,
+                "reward": final_reward,
                 "trace_list": trace_list,
                 "data_id": original_sample["data_id"],
             }
@@ -359,6 +369,7 @@ class AgentModeDaemon:
 
         for rollout_id, sample_info in finished_id_to_sample_info.items():
             for turn_index, trace in enumerate(sample_info["trace_list"]):
+
                 reward_list.append(sample_info["reward"])
                 prompt_ids, response_ids = trace["prompt_ids"], trace["response_ids"]
 
