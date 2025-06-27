@@ -36,6 +36,7 @@ VLLM_INSTALLED = False
 
 
 def instrument_all():
+    pass
     # if AGENTOPS_INSTALLED:
     #     from .agentops import instrument_agentops
 
