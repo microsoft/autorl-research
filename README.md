@@ -4,6 +4,7 @@ This repository contains code for a series of research projects on Automated Rei
 
 ## News
 
+* 2025.7.22 [Agent Lightning](agentlightning) has graduated as a standalone repository. Check it out [here](https://github.com/microsoft/agent-lightning).
 * 2025.6.6 [Agent Lightning](agentlightning) is now available as a research preview. Blog post is [here](https://www.microsoft.com/en-us/research/project/agent-lightning/).
 * 2023.3.10 [Bootstrapped Transformer for Offline Reinforcement Learning](https://seqml.github.io/bootorl/) is now available in [bootorl](bootorl).
 * 2022.10.12 [Reinforcement Learning with Automated Auxiliary Loss Search](https://seqml.github.io/a2ls/) is now available in [a2ls](a2ls).
