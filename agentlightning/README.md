@@ -1,5 +1,7 @@
 # Agent Lightning
 
+**Update 7/22/2025: We are maintaining the latest version of this project at https://github.com/microsoft/agent-lightning**
+
 **Warning: This project is currently in a research preview stage. The APIs are not stable and the functionalities are not well tested.**
 
 Welcome to Agent Lightning! This guide will walk you through setting up and running the project.
